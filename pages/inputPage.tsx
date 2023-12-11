@@ -1,7 +1,10 @@
-export default function A() {
+import Header from "@/components/Header";
+
+export default function inputPage() {
   const users = ["ユーザーA", "ユーザーB"];
   return (
     <div className="flex flex-col p-2 ">
+      <Header />
       <div className="flex-auto p-2">
         <select className="select select-bordered w-40 max-w-xs">
           {users.map((user) => {

@@ -1,7 +1,8 @@
 import Header from "@/components/Header";
 
 export default function inputPage() {
-  const users = ["ユーザーA", "ユーザーB"];
+  const users = ["ユーザーA", "ユーザーB"]; 
+
   return (
     <div className="flex flex-col p-2 ">
       <Header />

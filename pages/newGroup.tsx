@@ -1,13 +1,21 @@
 import Header from "@/components/Header";
 import { fetchUserTable } from "@/lib/supabaseFunctions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const NewGroup = async () => {
-  const userTable = await fetchUserTable();
-  console.log(userTable)
+const NewGroup = () => {
+  // fetchUserTable();
+  const [userTable, setUserTable] = useState<object[]>([]);
   const [groupName, setGroupName] = useState("");
   const [userNames, setUserNames] = useState<string[]>([]);
   const [currentName, setCurrentName] = useState("");
+  useEffect(() => {
+    (async () => {
+      const result = await fetchUserTable();
+      console.log(result);
+      console.log(typeof result);
+      // setUserTable(result);
+    })();
+  }, []);
   const addUserName = (name: string) => {
     if (userNames.length) {
       setUserNames([...userNames, currentName]);
@@ -15,6 +23,12 @@ const NewGroup = async () => {
       setUserNames([currentName]);
     }
   };
+  const handleClick = () => {
+    setUserNames(
+      userNames.filter((name) => name !== userNames[userNames.length - 1])
+    );
+  };
+
   return (
     <>
       <Header />
@@ -38,7 +52,10 @@ const NewGroup = async () => {
             追加
           </button>
         </div>
-        <button className="btn btn-circle btn-outline m-1 ">
+        <button
+          className="btn btn-circle btn-outline m-1 "
+          onClick={handleClick}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-3 w-3"
@@ -54,7 +71,9 @@ const NewGroup = async () => {
             />
           </svg>
         </button>{" "}
-        {/* <div>{userTable}</div> */}
+        {userNames.map((item, index) => {
+          return <p key={index}>{item}</p>;
+        })}
         <button className="btn w-full mt-5">グループを作成</button>
       </div>
     </>
